@@ -15,7 +15,7 @@ load 'scraper.rb'
 url = "http://xxlgamers.gameme.com/overview/17"
 
 s = Scraper.new(url)
-puts s.player_list.inspect
+puts s.steam_id_list
 
-
+web_api_call = "http://api.steampowered.com/IEconItems_440/GetPlayerItems/v0001/?key=987F12F50781CAE789D03E5A22D704D1&steamid=76561198027779646"
 
