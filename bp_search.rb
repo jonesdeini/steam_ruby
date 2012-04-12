@@ -1,20 +1,31 @@
 require 'net/http'
-require 'rexml/document'
+require 'json'
 
 class Bp_search
 
 API_CALL = "http://api.steampowered.com/IEconItems_440/GetPlayerItems/v0001/?key=987F12F50781CAE789D03E5A22D704D1&steamid="
-API_FORMAT = "&format=xml"
   
+  attr_accessor :crate_19
+
   def initialize(steam_id)
-    url = API_CALL + steam_id + API_FORMAT
-    xml_data = Net::HTTP.get_response(URI.parse(url)).body
-    @doc = REXML::Document.new(xml_data)
-    parse_xml(@doc, "result/status")
+    url = API_CALL + steam_id
+    raw_json = Net::HTTP.get_response(URI.parse(url)).body
+    json = JSON.parse raw_json
+    search json, 5022, 19
   end
 
-  def parse_xml(xml_doc, element)
-
+  def search(json_obj, defindex, float_value) 
+    if json_obj["result"]["status"] == 1
+      json_obj["result"]["items"].each do |item|
+        if item["defindex"] == defindex
+          item["attributes"].each do |attrib|
+            if attrib["float_value"] == float_value
+              @crate_19 = true
+            end
+          end
+        end
+      end
+    end
   end
 
 end
