@@ -1,17 +1,16 @@
 GEM
   remote: http://rubygems.org/
   specs:
-    bzip2-ruby (0.2.7)
+    ffi (1.1.5)
     json (1.6.6)
-    multi_json (1.0.4)
-    steam-condenser (1.1.0)
-      bzip2-ruby (~> 0.2.7)
-      multi_json (~> 1.0.3)
+    mime-types (1.19)
+    typhoeus (0.4.2)
+      ffi (~> 1.0)
+      mime-types (~> 1.18)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  bzip2-ruby
   json
-  steam-condenser
+  typhoeus
