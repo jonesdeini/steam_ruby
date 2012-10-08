@@ -1,23 +1,19 @@
+require 'steam-condenser'
+
 class Player
 
-  attr_accessor :steam_id, :stats, :current_tf2_hours, :total_tf2_hours
+  attr_accessor :steam_profile, :stats, :current_tf2_hours, :total_tf2_hours
 
   def initialize(id)
-    @steam_id = SteamId.new(id.dup)
-    @stats = id.game_stats("tf2")
-    get_tf_hours
-  end
-
-  def steam_id
-    @steam_id.instance_variable_get :@steam_id64
+    @steam_profile = SteamId.new id
+    # @stats = id.game_stats("tf2")
   end
 
   def get_tf_hours
-    games = @steam_id.instance_variable_get :@games 
+    games = @steam_profile.games
     games.each do |game_id, game|
-      name = game.instance_variable_get :@name
-      if name == "Team Fortress 2"
-        playtimes = @steam_id.instance_variable_get :@playtime
+      if game.name == "Team Fortress 2"
+        playtimes = @steam_profile.playtime
         @current_tf2_hours = playtimes[game_id].first / 60
         @total_tf2_hours = playtimes[game_id].last / 60
       end
@@ -25,3 +21,8 @@ class Player
   end
 
 end
+
+player = Player.new 76561198015466913
+#puts player.steam_profile.total_playtime 440
+#puts player.steam_profile.game_stats("tf2").inspect
+puts player.steam_profile.inspect
